@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/libs/prisma.js";
 import bcrypt from "bcrypt";
 
-const authOptions = {
+export const authOptions = {
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -12,19 +12,19 @@ const authOptions = {
                 password: { label: "Password", type: "password", placeholder: "******" }
             },
             async authorize(credentials, req) {
+                console.log(credentials)
+
                 const user = await prisma.user.findUnique({
                     where: {
                         email: credentials.email
                     }
                 });
 
-                if (!user) return null;
-
-                console.log(user)
+                if (!user) throw new Error("No user found")
 
                 const matchPassword = await bcrypt.compare(credentials.password, user.password);
 
-                if(!matchPassword) return null;
+                if(!matchPassword) throw new Error("Invalid password")
 
                 return{
                     id: user.id,
@@ -33,7 +33,10 @@ const authOptions = {
                 };
             }
         })
-    ]
+    ],
+    pages: {
+        signIn: "/auth/login",
+    },
 };
 
 const handler = NextAuth(authOptions);

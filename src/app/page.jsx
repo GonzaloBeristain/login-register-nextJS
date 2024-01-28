@@ -1,7 +1,7 @@
 const HomePage = () => {
   return(
-    <div>
-      <h1>Home</h1>
+    <div className="flex justify-center items-center h-[calc(100vh-7rem)]">
+      <h1 className="text-6xl font-bold shadow">Home Page</h1>
     </div>
   )
 };

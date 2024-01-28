@@ -8,6 +8,7 @@ const registerPage = () => {
         handleSubmit, 
         formState: {errors} 
         } = useForm();
+
     const router = useRouter();
 
     const onSubmit = handleSubmit(async (data) => {
@@ -110,7 +111,7 @@ const registerPage = () => {
                     <span className="block text-red-500 text-xs">{errors.confirmPassword.message}</span>
                 )}
 
-                <button className="w-full bg-blue-500 text-white p-3 rounded-lg mt-2">
+                <button className="w-full bg-blue-500 text-white p-3 rounded-lg mt-2 hover:bg-blue-600 active:bg-blue-800 shadow transition-colors duration-200 font-bold">
                     Register
                 </button>
             </form>
